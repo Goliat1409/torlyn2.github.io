@@ -1,0 +1,2944 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Torlyn Suite</title>
+  <style>
+    :root {
+      /* Tesla x Apple Ultra Premium Color System */
+      --black: #000000;
+      --white: #FFFFFF;
+      --gray-0: #F9F9F9;
+      --gray-1: #F2F2F2;
+      --gray-2: #E5E5E5;
+      --gray-3: #D1D1D1;
+      --gray-6: #8E8E93;
+      --gray-9: #1A1A1A;
+      --primary: #000000;
+      --accent: #007AFF;
+      --accent-light: rgba(0, 122, 255, 0.1);
+      --success: #34C759;
+      --error: #FF3B30;
+      --warning: #FF9500;
+      
+      /* Typography */
+      --font-display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+      --font-text: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+      --font-mono: 'SF Mono', 'Menlo', monospace;
+      
+      /* Shadows */
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+      --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.16);
+      
+      /* Spacing */
+      --space-xxs: 2px;
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 32px;
+      --space-2xl: 48px;
+      --space-3xl: 64px;
+      
+      /* Border Radius */
+      --radius-xs: 4px;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --radius-full: 999px;
+      
+      /* Transitions */
+      --transition-xxs: 0.1s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --transition-xs: 0.15s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --transition-sm: 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --transition-md: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --transition-lg: 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --transition-xl: 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    body {
+      background: var(--white);
+      color: var(--gray-9);
+      font-family: var(--font-text);
+      line-height: 1.5;
+      font-weight: 400;
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* Main Menu Styles */
+    #mainMenu {
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: var(--white);
+      padding: var(--space-xl);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #mainMenu::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+      z-index: 0;
+      opacity: 1;
+    }
+
+    #mainMenu::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" preserveAspectRatio="none"><path d="M0 0h200v200H0z" fill="none"/><path d="M20 20h10v10H20zM60 60h10v10H60zM100 100h10v10h-10zM140 140h10v10h-10zM180 180h10v10h-10z" fill="%23d1d1d1" opacity="0.3"/></svg>') 0 0;
+      background-size: 200px 200px;
+      z-index: 0;
+      animation: sandMove 200s linear infinite;
+    }
+
+    @keyframes sandMove {
+      0% { background-position: 0 0; }
+      100% { background-position: 2000px 2000px; }
+    }
+
+    .sand-particle {
+      position: absolute;
+      background: rgba(210, 180, 140, 0.6);
+      border-radius: 50%;
+      opacity: 0;
+      animation: floatSand 15s infinite ease-in-out;
+    }
+
+    @keyframes floatSand {
+      0% { transform: translate(0, 0) scale(0.5); opacity: 0; }
+      20% { opacity: 0.3; }
+      50% { transform: translate(50px, -30px) scale(1); opacity: 0.4; }
+      80% { opacity: 0.2; }
+      100% { transform: translate(100px, 0) scale(0.5); opacity: 0; }
+    }
+    
+    #mainMenu h1 {
+      font-size: clamp(2.5rem, 8vw, 4rem);
+      font-weight: 800;
+      font-family: var(--font-display);
+      margin-bottom: var(--space-sm);
+      position: relative;
+      z-index: 1;
+      letter-spacing: -1.5px;
+      color: var(--black);
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      opacity: 1;
+      transform: translateY(0);
+      transition: all var(--transition-xl);
+    }
+    
+    #mainMenu .slogan {
+      font-size: clamp(0.9rem, 3vw, 1.1rem);
+      color: var(--gray-6);
+      margin-bottom: var(--space-2xl);
+      letter-spacing: 0.3px;
+      position: relative;
+      z-index: 1;
+      font-weight: 500;
+      opacity: 1;
+      transform: translateY(0);
+      transition: all var(--transition-xl) 0.1s;
+    }
+    
+    #mainMenu .footer {
+      position: absolute;
+      bottom: var(--space-lg);
+      width: 100%;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--gray-6);
+      z-index: 1;
+    }
+    
+    #mainMenu .version {
+      color: var(--gray-3);
+      font-weight: 500;
+    }
+    
+    .menu-buttons {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+      width: 100%;
+      max-width: min(100%, 400px);
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .menu-btn {
+      background: rgba(0, 0, 0, 0.1);
+      color: var(--black);
+      padding: var(--space-xl);
+      font-size: clamp(1rem, 4vw, 1.2rem);
+      font-weight: 600;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      transition: all var(--transition-md);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 120px;
+      opacity: 1;
+      transform: translateY(0);
+      transition: all var(--transition-xl) 0.2s;
+      box-shadow: var(--shadow-sm);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    
+    .menu-btn::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 100%);
+      z-index: -1;
+    }
+    
+    .menu-btn:hover {
+      background: rgba(0, 0, 0, 0.15);
+      border-color: rgba(0, 0, 0, 0.3);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px) scale(1.01);
+    }
+    
+    .menu-btn:active {
+      transform: translateY(0) scale(0.99);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    .menu-btn span {
+      display: block;
+      font-size: clamp(0.8rem, 3vw, 0.9rem);
+      margin-top: var(--space-xs);
+      color: var(--gray-6);
+      font-weight: 400;
+    }
+    
+    #specLogBtn {
+      border-left: 4px solid var(--black);
+    }
+    
+    #knockoutBtn {
+      border-left: 4px solid var(--accent);
+    }
+
+    /* Content Sections */
+    .content {
+      display: none;
+      min-height: 100vh;
+      padding: var(--space-3xl) var(--space-md) var(--space-2xl);
+      background: var(--white);
+    }
+
+    .back-btn {
+      position: fixed;
+      top: var(--space-lg);
+      left: var(--space-md);
+      background: var(--white);
+      color: var(--black);
+      padding: var(--space-sm) var(--space-md);
+      font-size: 0.9rem;
+      font-weight: 500;
+      border: 1px solid var(--gray-2);
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: all var(--transition-sm);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      box-shadow: var(--shadow-sm);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    
+    .back-btn::before {
+      content: "←";
+      font-size: 1rem;
+    }
+    
+    .back-btn:hover {
+      background: var(--gray-1);
+      transform: translateX(-4px);
+    }
+
+    /* Rolling Spec-Log Section */
+    #specLog .container {
+      background: var(--white);
+      padding: var(--space-xl);
+      border-radius: var(--radius-xl);
+      max-width: min(100%, 900px);
+      margin: 0 auto;
+      border: 1px solid var(--gray-1);
+    }
+    
+    #specLog header {
+      margin-bottom: var(--space-2xl);
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    
+    #specLog header h1 {
+      font-size: clamp(1.8rem, 6vw, 2.2rem);
+      font-weight: 700;
+      color: var(--black);
+      margin-bottom: var(--space-sm);
+      font-family: var(--font-display);
+      letter-spacing: -0.5px;
+    }
+    
+    #specLog header p {
+      font-size: clamp(0.9rem, 3vw, 1rem);
+      color: var(--gray-6);
+      margin-bottom: 0;
+      font-weight: 400;
+    }
+    
+    #specLog .card {
+      padding: 0;
+      position: relative;
+      z-index: 1;
+    }
+    
+    #specLog fieldset {
+      border: none;
+      margin-bottom: var(--space-2xl);
+      padding: 0;
+    }
+    
+    #specLog legend {
+      font-size: clamp(1.1rem, 4vw, 1.3rem);
+      font-weight: 600;
+      color: var(--black);
+      margin-bottom: var(--space-lg);
+      font-family: var(--font-display);
+      display: flex;
+      align-items: center;
+      position: relative;
+      padding-left: var(--space-md);
+    }
+    
+    #specLog legend::before {
+      content: "";
+      display: inline-block;
+      width: 4px;
+      height: 24px;
+      background: var(--black);
+      margin-right: var(--space-sm);
+      border-radius: 2px;
+    }
+    
+    #specLog .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+
+    #specLog .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+    
+    #specLog .form-group {
+      margin-bottom: var(--space-lg);
+    }
+    
+    #specLog label {
+      display: block;
+      font-weight: 500;
+      font-size: clamp(0.9rem, 3vw, 1rem);
+      margin-bottom: var(--space-sm);
+      color: var(--gray-6);
+    }
+    
+    #specLog input, #specLog select {
+      width: 100%;
+      padding: var(--space-md);
+      background: var(--white);
+      border: 1px solid var(--gray-2);
+      border-radius: var(--radius-sm);
+      font-size: clamp(0.95rem, 3vw, 1rem);
+      transition: all var(--transition-sm);
+      color: var(--black);
+      font-family: var(--font-text);
+    }
+    
+    #specLog input:focus, #specLog select:focus {
+      border-color: var(--black);
+      outline: none;
+      box-shadow: 0 0 0 2px var(--gray-1);
+    }
+    
+    #specLog input::placeholder, #specLog select option:first-child {
+      color: var(--gray-3);
+    }
+    
+    #specLog textarea {
+      width: 100%;
+      padding: var(--space-md);
+      background: var(--white);
+      border: 1px solid var(--gray-2);
+      border-radius: var(--radius-sm);
+      font-size: clamp(0.95rem, 3vw, 1rem);
+      min-height: 120px;
+      resize: vertical;
+      transition: all var(--transition-sm);
+      color: var(--black);
+      font-family: var(--font-text);
+    }
+    
+    #specLog textarea:focus {
+      outline: none;
+      border-color: var(--black);
+      box-shadow: 0 0 0 2px var(--gray-1);
+    }
+
+    /* Select with Add Button */
+    .select-with-add {
+      display: flex;
+      gap: var(--space-sm);
+      align-items: center;
+    }
+
+    .select-with-add select {
+      flex: 1;
+    }
+
+    .select-with-add button {
+      background: var(--gray-1);
+      border: 1px solid var(--gray-2);
+      border-radius: var(--radius-sm);
+      padding: var(--space-md);
+      cursor: pointer;
+      transition: all var(--transition-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .select-with-add button:hover {
+      background: var(--gray-2);
+    }
+
+    .select-with-add button:active {
+      transform: scale(0.95);
+    }
+    
+    /* Time Adjustment Grid */
+    #specLog .time-adjust {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-sm);
+      margin: var(--space-lg) 0;
+      max-width: 100%;
+    }
+    
+    #specLog .time-adjust button {
+      padding: var(--space-sm);
+      background: var(--white);
+      border: 1px solid var(--gray-2);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-size: clamp(0.9rem, 3vw, 0.95rem);
+      font-weight: 500;
+      transition: all var(--transition-sm);
+      color: var(--black);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      aspect-ratio: 1;
+    }
+    
+    #specLog .time-adjust button:hover {
+      background: var(--gray-1);
+      border-color: var(--gray-3);
+    }
+    
+    #specLog .time-adjust button.active {
+      background: var(--black);
+      color: var(--white);
+      border-color: var(--black);
+      transform: scale(1.05);
+    }
+    
+    /* Automatic Calculation */
+    #specLog .auto-calculation {
+      background: var(--gray-0);
+      padding: var(--space-md);
+      border-radius: var(--radius-sm);
+      margin-top: var(--space-md);
+      border: 1px solid var(--gray-1);
+    }
+    
+    #specLog .auto-calculation p {
+      font-size: 0.9rem;
+      color: var(--gray-6);
+      margin-bottom: var(--space-xs);
+    }
+    
+    #specLog .auto-calculation .result {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--black);
+    }
+    
+    #specLog .form-buttons {
+      margin-top: var(--space-2xl);
+    }
+    
+    #specLog .form-buttons button {
+      width: 100%;
+      background: var(--black);
+      color: var(--white);
+      padding: var(--space-md);
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: clamp(1rem, 4vw, 1.1rem);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-md);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+    }
+    
+    #specLog .form-buttons button:hover {
+      background: var(--gray-9);
+    }
+    
+    /* Results Card */
+    #specLog .result-card {
+      padding: var(--space-xl);
+      border-radius: var(--radius-lg);
+      background: var(--white);
+      margin-top: var(--space-xl);
+      border: 1px solid var(--gray-1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    #specLog .result-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--black);
+    }
+    
+    #specLog .result-card h2 {
+      font-size: clamp(1.4rem, 5vw, 1.8rem);
+      color: var(--black);
+      text-align: center;
+      margin-bottom: var(--space-xl);
+      font-family: var(--font-display);
+      position: relative;
+      padding-bottom: var(--space-md);
+    }
+    
+    #specLog .result-card h2::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: var(--black);
+      border-radius: 3px;
+    }
+    
+    #specLog .result-card h3 {
+      font-size: clamp(1.1rem, 4vw, 1.3rem);
+      color: var(--black);
+      margin: var(--space-xl) 0 var(--space-md);
+      font-family: var(--font-display);
+      position: relative;
+      padding-left: var(--space-md);
+      letter-spacing: 0.5px;
+    }
+    
+    #specLog .result-card h3::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 6px;
+      height: 18px;
+      width: 4px;
+      background: var(--black);
+      border-radius: 2px;
+    }
+    
+    #specLog .result-card p {
+      font-size: clamp(0.9rem, 3vw, 1rem);
+      margin-bottom: var(--space-md);
+      color: var(--gray-6);
+      line-height: 1.6;
+    }
+    
+    #specLog .result-card .info-label {
+      color: var(--black);
+      font-weight: 500;
+    }
+    
+    #specLog .result-card table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: var(--space-xl);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+    
+    #specLog .result-card th, #specLog .result-card td {
+      border: 1px solid var(--gray-1);
+      padding: var(--space-md);
+      font-size: clamp(0.85rem, 3vw, 0.95rem);
+      text-align: left;
+    }
+    
+    #specLog .result-card th {
+      background: var(--gray-1);
+      color: var(--black);
+      font-weight: 600;
+    }
+    
+    #specLog .result-card td {
+      color: var(--gray-6);
+    }
+    
+    #specLog .result-card .highlight {
+      color: var(--black);
+      font-weight: 600;
+    }
+    
+    #specLog .result-card .success {
+      color: var(--success);
+    }
+    
+    #specLog .result-card .error {
+      color: var(--error);
+    }
+    
+    #specLog .report-actions {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      margin-top: var(--space-xl);
+    }
+    
+    #specLog .report-actions button {
+      background: var(--white);
+      padding: var(--space-md);
+      border-radius: var(--radius-sm);
+      color: var(--black);
+      border: 1px solid var(--gray-2);
+      font-size: clamp(0.9rem, 3vw, 1rem);
+      font-weight: 500;
+      cursor: pointer;
+      transition: all var(--transition-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+    }
+    
+    #specLog .report-actions button:hover {
+      background: var(--gray-1);
+      border-color: var(--gray-3);
+    }
+    
+    #specLog .report-actions button:nth-child(1) {
+      background: var(--black);
+      color: var(--white);
+    }
+    
+    #specLog .report-actions button:nth-child(1):hover {
+      background: var(--gray-9);
+    }
+    
+    #specLog .report-actions button:nth-child(3) {
+      background: var(--white);
+      color: var(--black);
+    }
+
+    /* History Section */
+    #history {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--white);
+      z-index: 2000;
+      padding: var(--space-3xl) var(--space-md) var(--space-2xl);
+      overflow-y: auto;
+    }
+
+    #history .container {
+      max-width: min(100%, 900px);
+      margin: 0 auto;
+    }
+
+    #history h2 {
+      font-size: clamp(1.8rem, 6vw, 2.2rem);
+      color: var(--black);
+      text-align: center;
+      margin-bottom: var(--space-xl);
+      font-family: var(--font-display);
+      letter-spacing: -0.5px;
+    }
+
+    .history-item {
+      background: var(--white);
+      border: 1px solid var(--gray-1);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg);
+      margin-bottom: var(--space-md);
+      position: relative;
+    }
+
+    .history-item-content {
+      max-height: 60vh;
+      overflow-y: auto;
+      padding-right: var(--space-sm);
+    }
+
+    .history-item-actions {
+      display: flex;
+      gap: var(--space-sm);
+      margin-top: var(--space-md);
+    }
+
+    .history-item-actions button {
+      flex: 1;
+      padding: var(--space-sm);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--gray-2);
+      background: var(--white);
+      cursor: pointer;
+      transition: all var(--transition-sm);
+    }
+
+    .history-item-actions button:hover {
+      background: var(--gray-1);
+    }
+
+    .history-item-actions button:first-child {
+      background: var(--black);
+      color: var(--white);
+      border-color: var(--black);
+    }
+
+    .history-item-actions button:first-child:hover {
+      background: var(--gray-9);
+    }
+
+    .history-item-actions button:last-child {
+      color: var(--error);
+      border-color: var(--error);
+    }
+
+    .history-item-actions button:last-child:hover {
+      background: var(--error);
+      color: var(--white);
+    }
+
+    #historyBackBtn {
+      position: fixed;
+      top: var(--space-lg);
+      left: var(--space-md);
+      background: var(--white);
+      color: var(--black);
+      padding: var(--space-sm) var(--space-md);
+      font-size: 0.9rem;
+      font-weight: 500;
+      border: 1px solid var(--gray-2);
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: all var(--transition-sm);
+      z-index: 1001;
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      box-shadow: var(--shadow-sm);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    #historyBackBtn::before {
+      content: "←";
+      font-size: 1rem;
+    }
+
+    #historyBackBtn:hover {
+      background: var(--gray-1);
+      transform: translateX(-4px);
+    }
+
+    #clearHistoryBtn {
+      width: 100%;
+      background: var(--error);
+      color: var(--white);
+      padding: var(--space-md);
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: clamp(1rem, 4vw, 1.1rem);
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: var(--space-lg);
+      transition: all var(--transition-md);
+    }
+
+    #clearHistoryBtn:hover {
+      background: #e0352b;
+    }
+    
+    /* Knockout Section */
+    #knockout .container {
+      background: var(--white);
+      padding: var(--space-xl);
+      border-radius: var(--radius-xl);
+      max-width: min(100%, 900px);
+      margin: 0 auto;
+      border: 1px solid var(--gray-1);
+    }
+    
+    #knockout h1 {
+      font-size: clamp(1.8rem, 6vw, 2.2rem);
+      color: var(--black);
+      text-align: center;
+      margin-bottom: var(--space-sm);
+      font-family: var(--font-display);
+      letter-spacing: -0.5px;
+    }
+    
+    .knockout-back-btn {
+      display: block;
+      width: 120px;
+      margin: 0 auto var(--space-lg);
+      background: var(--white);
+      color: var(--black);
+      padding: var(--space-sm) var(--space-md);
+      font-size: 0.9rem;
+      font-weight: 500;
+      border: 1px solid var(--gray-2);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--transition-sm);
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .knockout-back-btn:hover {
+      background: var(--gray-1);
+      transform: translateY(-2px);
+    }
+    
+    .knockout-back-btn:active {
+      transform: translateY(0);
+    }
+    
+    #knockout label {
+      font-weight: 500;
+      font-size: clamp(0.9rem, 3vw, 1rem);
+      display: block;
+      margin: var(--space-lg) 0 var(--space-sm);
+      color: var(--gray-6);
+    }
+    
+    #knockout input, #knockout select {
+      width: 100%;
+      padding: var(--space-md);
+      background: var(--white);
+      border: 1px solid var(--gray-2);
+      border-radius: var(--radius-sm);
+      font-size: clamp(0.95rem, 3vw, 1rem);
+      transition: all var(--transition-sm);
+      color: var(--black);
+      font-family: var(--font-text);
+    }
+    
+    #knockout input:focus, #knockout select:focus {
+      border-color: var(--black);
+      outline: none;
+      box-shadow: 0 0 0 2px var(--gray-1);
+    }
+    
+    #knockout button {
+      width: 100%;
+      background: var(--black);
+      color: var(--white);
+      padding: var(--space-md);
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: clamp(1rem, 4vw, 1.1rem);
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: var(--space-xl);
+      transition: all var(--transition-md);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+    }
+    
+    #knockout button:hover {
+      background: var(--gray-9);
+    }
+    
+    #knockout .card {
+      padding: var(--space-lg);
+      border-radius: var(--radius-md);
+      margin-top: var(--space-xl);
+      background: var(--white);
+      border: 1px solid var(--gray-1);
+    }
+    
+    #knockout .section-title {
+      font-size: clamp(1.1rem, 4vw, 1.3rem);
+      font-weight: 600;
+      color: var(--black);
+      margin: var(--space-xl) 0 var(--space-lg);
+      font-family: var(--font-display);
+      position: relative;
+      padding-left: var(--space-md);
+    }
+    
+    #knockout .section-title::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 6px;
+      height: 18px;
+      width: 4px;
+      background: var(--black);
+      border-radius: 2px;
+    }
+    
+    #knockout table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: clamp(0.8rem, 3vw, 0.85rem);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+      margin-bottom: var(--space-md);
+    }
+    
+    #knockout th, #knockout td {
+      padding: var(--space-sm);
+      border: 1px solid var(--gray-1);
+      text-align: center;
+      color: var(--gray-6);
+    }
+    
+    #knockout th {
+      background: var(--gray-1);
+      color: var(--black);
+      font-weight: 600;
+    }
+    
+    #knockout tr.selected-row {
+      background: var(--gray-1);
+      position: relative;
+    }
+    
+    #knockout tr.selected-row::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 3px;
+      background: var(--black);
+    }
+
+    /* Recommendation Cards */
+    .recommendation-cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+      margin: var(--space-lg) 0;
+    }
+
+    .recommendation-card {
+      padding: var(--space-md);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--gray-2);
+      background: var(--white);
+      transition: all var(--transition-sm);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .recommendation-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 100%);
+      z-index: -1;
+    }
+
+    .recommendation-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .recommendation-card.best {
+      border-left: 4px solid var(--success);
+    }
+
+    .recommendation-card.good {
+      border-left: 4px solid var(--warning);
+    }
+
+    .recommendation-card.ok {
+      border-left: 4px solid var(--error);
+    }
+
+    .recommendation-card h3 {
+      font-size: 1rem;
+      margin-bottom: var(--space-xs);
+      color: var(--black);
+    }
+
+    .recommendation-card p {
+      font-size: 0.9rem;
+      margin-bottom: var(--space-xs);
+    }
+
+    .recommendation-card .error {
+      font-weight: 600;
+    }
+
+    /* Loading dots animation */
+    .loading-dots {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .loading-dots::after {
+      content: "...";
+      animation: dots 1.5s steps(3, end) infinite;
+    }
+    
+    @keyframes dots {
+      0%, 20% { content: "."; }
+      40% { content: ".."; }
+      60%, 100% { content: "..."; }
+    }
+    
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 3000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background: var(--white);
+      padding: var(--space-xl);
+      border-radius: var(--radius-lg);
+      width: 90%;
+      max-width: 500px;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: var(--space-md);
+      right: var(--space-md);
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--gray-6);
+    }
+
+    .modal-title {
+      font-size: 1.5rem;
+      margin-bottom: var(--space-lg);
+      color: var(--black);
+      font-family: var(--font-display);
+    }
+
+    .modal-input {
+      width: 100%;
+      padding: var(--space-md);
+      margin-bottom: var(--space-lg);
+      border: 1px solid var(--gray-2);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-text);
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: var(--space-md);
+    }
+
+    .modal-buttons button {
+      flex: 1;
+      padding: var(--space-md);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all var(--transition-sm);
+    }
+
+    .modal-buttons button:first-child {
+      background: var(--black);
+      color: var(--white);
+      border: none;
+    }
+
+    .modal-buttons button:first-child:hover {
+      background: var(--gray-9);
+    }
+
+    .modal-buttons button:last-child {
+      background: var(--white);
+      color: var(--black);
+      border: 1px solid var(--gray-2);
+    }
+
+    .modal-buttons button:last-child:hover {
+      background: var(--gray-1);
+    }
+
+    /* PT Assistant Styles */
+    #pt-assistant {
+      position: fixed;
+      bottom: var(--space-lg);
+      right: var(--space-lg);
+      z-index: 1000;
+      transition: all var(--transition-md);
+    }
+
+    #pt-character {
+      width: 80px;
+      height: 80px;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 20 L70 40 L70 60 L50 80 L30 60 L30 40 Z" fill="%23007AFF"/><path d="M50 25 L65 40 L65 60 L50 75 L35 60 L35 40 Z" fill="%23000000"/><circle cx="50" cy="50" r="5" fill="%23FFFFFF"/></svg>');
+      background-size: contain;
+      background-repeat: no-repeat;
+      cursor: pointer;
+      animation: bounce 2s infinite, lookAround 8s infinite;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+    }
+
+    #pt-chat {
+      position: absolute;
+      bottom: 100px;
+      right: 0;
+      width: 300px;
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-xl);
+      border: 1px solid var(--gray-2);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    #pt-chat-header {
+      background: var(--black);
+      color: var(--white);
+      padding: var(--space-md);
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    #pt-close-chat {
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    #pt-chat-body {
+      padding: var(--space-md);
+      height: 300px;
+      overflow-y: auto;
+      background: var(--gray-0);
+    }
+
+    .pt-message {
+      margin-bottom: var(--space-md);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-md);
+      max-width: 80%;
+      font-size: 0.9rem;
+    }
+
+    .pt-user {
+      background: var(--accent-light);
+      color: var(--black);
+      margin-left: auto;
+      border-top-right-radius: var(--radius-xs);
+    }
+
+    .pt-bot {
+      background: var(--white);
+      color: var(--black);
+      border: 1px solid var(--gray-2);
+      margin-right: auto;
+      border-top-left-radius: var(--radius-xs);
+    }
+
+    #pt-chat-input {
+      display: flex;
+      padding: var(--space-md);
+      background: var(--white);
+      border-top: 1px solid var(--gray-2);
+    }
+
+    #pt-user-input {
+      flex: 1;
+      padding: var(--space-sm) var(--space-md);
+      border: 1px solid var(--gray-2);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-text);
+    }
+
+    #pt-send-btn {
+      margin-left: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+    }
+
+    #pt-quick-questions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-sm);
+      margin-top: var(--space-md);
+    }
+
+    .pt-question-btn {
+      padding: var(--space-xs) var(--space-sm);
+      background: var(--white);
+      border: 1px solid var(--gray-2);
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      text-align: left;
+      cursor: pointer;
+      transition: all var(--transition-sm);
+    }
+
+    .pt-question-btn:hover {
+      background: var(--gray-1);
+    }
+
+    /* Animations */
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes lookAround {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(5deg); }
+      75% { transform: rotate(-5deg); }
+    }
+
+    @keyframes attention {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .pt-attention {
+      animation: attention 1s infinite;
+    }
+
+    /* Speech Bubble */
+    .pt-speech-bubble {
+      position: absolute;
+      bottom: 100px;
+      right: 20px;
+      background: var(--white);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--gray-2);
+      font-size: 0.8rem;
+      max-width: 200px;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Blank measurements grid */
+    .blank-measurements {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+
+    .blank-measurements-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-lg);
+    }
+
+    /* Precision readings grid */
+    .precision-readings-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+
+    .precision-readings-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-lg);
+    }
+
+    /* Developer Credit */
+    .developer-credit {
+      position: fixed;
+      bottom: var(--space-sm);
+      right: var(--space-sm);
+      font-size: 0.7rem;
+      color: var(--gray-6);
+      background: rgba(255, 255, 255, 0.8);
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--radius-full);
+      z-index: 100;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 767px) {
+      #mainMenu {
+        padding: var(--space-lg);
+      }
+      
+      .menu-btn {
+        padding: var(--space-lg);
+        min-height: 100px;
+      }
+      
+      .content {
+        padding: var(--space-2xl) var(--space-md) var(--space-xl);
+      }
+      
+      #specLog .container, #knockout .container {
+        padding: var(--space-lg);
+        border-radius: var(--radius-lg);
+      }
+      
+      #specLog .time-adjust {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      
+      #specLog .time-adjust button {
+        padding: var(--space-xs);
+      }
+
+      .history-item-content {
+        max-height: 50vh;
+      }
+
+      /* Mobile-specific grid layouts */
+      #specLog .machine-config {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-md);
+      }
+
+      #specLog .tech-params {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-md);
+      }
+
+      #specLog .precision-readings {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-md);
+      }
+
+      #specLog .peine-adjust {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+      }
+
+      #specLog .other-section {
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: var(--space-sm);
+      }
+
+      /* PT Assistant mobile */
+      #pt-character {
+        width: 60px;
+        height: 60px;
+      }
+      
+      #pt-chat {
+        width: 280px;
+        right: -20px;
+      }
+    }
+    
+    @media (min-width: 768px) {
+      .menu-buttons {
+        grid-template-columns: 1fr 1fr;
+        max-width: 700px;
+        gap: var(--space-lg);
+      }
+      
+      #specLog .grid-2 {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-xl);
+      }
+
+      #specLog .grid-3 {
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: var(--space-md);
+      }
+      
+      #specLog .time-adjust {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      
+      #specLog .report-actions {
+        flex-direction: row;
+        justify-content: center;
+      }
+      
+      #specLog .report-actions button {
+        flex: 1;
+      }
+      
+      #knockout .grid-form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-xl);
+      }
+      
+      #knockout table {
+        white-space: normal;
+      }
+
+      .history-item-actions {
+        flex-direction: row;
+      }
+
+      .recommendation-cards {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      #mainMenu {
+        padding: var(--space-xl);
+      }
+      
+      #specLog .container, #knockout .container {
+        padding: var(--space-2xl);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Main Menu -->
+  <div id="mainMenu">
+    <h1>Torlyn</h1>
+    <div class="slogan">Smarter Adjustments</div>
+    <div class="menu-buttons">
+      <button class="menu-btn" id="specLogBtn">
+        <strong>Rolling Spec-Log</strong>
+        <span>Sistema de lectura de ajustes</span>
+      </button>
+      <button class="menu-btn" id="knockoutBtn">
+        <strong>Knock Out Pin</strong>
+        <span>Buscador de botadores</span>
+      </button>
+    </div>
+    <div class="footer">
+      <span class="version">Versión 2.5</span>
+    </div>
+  </div>
+
+  <!-- Rolling Spec-Log Section -->
+  <div id="specLog" class="content">
+    <button class="back-btn" id="backToMenuFromSpecLog">Menú</button>
+    <button class="back-btn" id="viewHistoryBtn" style="left: auto; right: var(--space-md);">Historial</button>
+    <div class="container">
+      <header>
+        <h1>Rolling Spec-Log</h1>
+        <p>Sistema avanzado de ajuste de precisión</p>
+      </header>
+      <div class="card">
+        <form id="adjustForm">
+          <fieldset>
+            <legend>Información General</legend>
+            <div class="grid-2">
+              <div class="form-group">
+                <label>Operador</label>
+                <div class="select-with-add">
+                  <select id="operador">
+                    <option value="">Seleccione operador</option>
+                    <option>Juan Pérez</option>
+                    <option>María García</option>
+                    <option>Carlos López</option>
+                    <option>Ana Martínez</option>
+                  </select>
+                  <button type="button" id="addOperatorBtn" title="Agregar operador">+</button>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Número de parte</label>
+                <div class="select-with-add">
+                  <select id="numeroParte">
+                    <option value="">Seleccione número</option>
+                    <option>1234 5678 910</option>
+                    <option>9876 5432 100</option>
+                    <option>1122 3344 556</option>
+                    <option>7788 9900 112</option>
+                  </select>
+                  <button type="button" id="addPartNumberBtn" title="Agregar número">+</button>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Nombre del tornillo</label>
+                <div class="select-with-add">
+                  <select id="nombreTornillo">
+                    <option value="">Seleccione tornillo</option>
+                    <option>DELTA PT 00x00</option>
+                    <option>DELTA PT 01x01</option>
+                    <option>DELTA PT 02x02</option>
+                    <option>DELTA PT 03x03</option>
+                  </select>
+                  <button type="button" id="addScrewNameBtn" title="Agregar tornillo">+</button>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Tipo de ajuste</label>
+                <select id="tipoAjuste">
+                  <option value="">Seleccione</option>
+                  <option>Ajuste Normal</option>
+                  <option>Prueba</option>
+                  <option>Capacitación</option>
+                </select>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Configuración de Máquina</legend>
+            <div class="grid-2 machine-config">
+              <div class="form-group">
+                <label>Modelo de máquina</label>
+                <select id="modeloMaquina">
+                  <option value="">Seleccione</option>
+                  <option>E.W. MENN GW-52</option>
+                  <option>E.W. MENN ZU AF6</option>
+                  <option>E.W. MENN AF6</option>
+                  <option>E.W. MENN CHUN ZU AF6</option>
+                  <option>E.W. MENN AF101</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Número de máquina</label>
+                <select id="numeroMaquina">
+                  <option value="">Seleccione</option>
+                  <option>RO01</option>
+                  <option>RO02</option>
+                  <option>RO03</option>
+                  <option>RO04</option>
+                  <option>RO05</option>
+                  <option>RO06</option>
+                  <option>RO07</option>
+                  <option>RO08</option>
+                  <option>RO09</option>
+                  <option>RO10</option>
+                  <option>RO11</option>
+                  <option>RO12</option>
+                  <option>RO13</option>
+                  <option>RO14</option>
+                  <option>RO15</option>
+                  <option>RO16</option>
+                  <option>RO17</option>
+                  <option>RO18</option>
+                  <option>RO19</option>
+                  <option>RO20</option>
+                  <option>RO21</option>
+                  <option>RO22</option>
+                  <option>RO23</option>
+                  <option>RO24</option>
+                  <option>RO25</option>
+                  <option>RO26</option>
+                  <option>RO27</option>
+                  <option>RO28</option>
+                  <option>RO29</option>
+                  <option>RO30</option>
+                  <option>RO31</option>
+                  <option>RO32</option>
+                  <option>RO33</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Modelo de botador</label>
+                <select id="modeloBotador">
+                  <option value="">Seleccione</option>
+                  <option>T210050001</option>
+                  <option>T210050002</option>
+                  <option>T210050003</option>
+                  <option>T210050004</option>
+                  <option>T210050005</option>
+                  <option>T210050006</option>
+                  <option>T210050007</option>
+                  <option>T210050008</option>
+                  <option>T210050014</option>
+                  <option>T210050016</option>
+                  <option>T210050017</option>
+                  <option>T210050018</option>
+                  <option>T210050019</option>
+                  <option>T210050021</option>
+                  <option>T210050022</option>
+                  <option>T210050023</option>
+                  <option>T210050024</option>
+                  <option>T210050025</option>
+                  <option>T210050026</option>
+                  <option>T210050027</option>
+                  <option>T210050028</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Fecha y hora del ajuste</label>
+                <input type="datetime-local" id="fechaAjuste">
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Parámetros Técnicos</legend>
+            <div class="grid-2 tech-params">
+              <div class="form-group">
+                <label>Diámetro deseado (mm)</label>
+                <input type="number" id="diametroDeseado" step="0.001" min="0" placeholder="Ej. 25.000">
+              </div>
+              <div class="form-group">
+                <label>Altura de la guía (mm)</label>
+                <input type="number" id="alturaGuia" step="0.001" min="0" placeholder="Ej. 15.000">
+              </div>
+              <div class="form-group">
+                <label>Altura de la sobreguía (mm)</label>
+                <input type="number" id="alturaSobreguia" step="0.001" min="0" placeholder="Ej. 10.000">
+              </div>
+              <div class="form-group">
+                <label>Diámetro entre la guía (mm)</label>
+                <input type="number" id="diametroEntreGuia" step="0.001" min="0" placeholder="Ej. 5.000">
+              </div>
+              <div class="form-group">
+                <label>Diámetro punta guía izq. (mm)</label>
+                <input type="number" id="diametroPuntaGuia" step="0.001" min="0" placeholder="Ej. 3.500">
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Mediciones del Blank (mm)</legend>
+            <div class="blank-measurements">
+              <div class="blank-measurements-row">
+                <div class="form-group">
+                  <label>Diámetro Mayor - Máximo (mm)</label>
+                  <input type="number" id="diametroMayorMax" step="0.001" min="0" placeholder="Ej. 25.000">
+                </div>
+                <div class="form-group">
+                  <label>Diámetro Mayor - Mínimo (mm)</label>
+                  <input type="number" id="diametroMayorMin" step="0.001" min="0" placeholder="Ej. 24.500">
+                </div>
+              </div>
+              <div class="blank-measurements-row">
+                <div class="form-group">
+                  <label>Diámetro Menor - Máximo (mm)</label>
+                  <input type="number" id="diametroMenorMax" step="0.001" min="0" placeholder="Ej. 15.000">
+                </div>
+                <div class="form-group">
+                  <label>Diámetro Menor - Mínimo (mm)</label>
+                  <input type="number" id="diametroMenorMin" step="0.001" min="0" placeholder="Ej. 14.500">
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Lectura de precisión</legend>
+            <div class="precision-readings-grid">
+              <div class="precision-readings-row">
+                <div class="form-group">
+                  <label>Entrada - Superior (mm)</label>
+                  <input type="number" id="entradaSuperior" step="0.001" min="0" placeholder="Ej. 10.000">
+                </div>
+                <div class="form-group">
+                  <label>Entrada - Inferior (mm)</label>
+                  <input type="number" id="entradaInferior" step="0.001" min="0" placeholder="Ej. 10.000">
+                </div>
+              </div>
+              <div class="precision-readings-row">
+                <div class="form-group">
+                  <label>Centro - Superior (mm)</label>
+                  <input type="number" id="centroSuperior" step="0.001" min="0" placeholder="Ej. 10.000">
+                </div>
+                <div class="form-group">
+                  <label>Centro - Inferior (mm)</label>
+                  <input type="number" id="centroInferior" step="0.001" min="0" placeholder="Ej. 10.000">
+                </div>
+              </div>
+              <div class="precision-readings-row">
+                <div class="form-group">
+                  <label>Salida - Superior (mm)</label>
+                  <input type="number" id="salidaSuperior" step="0.001" min="0" placeholder="Ej. 10.000">
+                </div>
+                <div class="form-group">
+                  <label>Salida - Inferior (mm)</label>
+                  <input type="number" id="salidaInferior" step="0.001" min="0" placeholder="Ej. 10.000">
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Datos adicionales rápidos</legend>
+            <div class="grid-2">
+              <div class="form-group">
+                <label>Velocidad de operación</label>
+                <input type="text" id="velocidadOperacion" placeholder="Ej. 1200 RPM o 30 piezas/min">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Observaciones técnicas adicionales</label>
+              <textarea id="observacionesTecnicas" placeholder="Describa cualquier observación técnica relevante"></textarea>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Ajuste de Peines</legend>
+            <div class="grid-2 peine-adjust">
+              <div class="form-group">
+                <label>Profundidad del block (mm)</label>
+                <input type="number" id="profundidadBlock" step="0.001" min="0" placeholder="Ej. 20.000">
+              </div>
+              <div class="form-group">
+                <label>Dimensión del peine (mm)</label>
+                <input type="number" id="dimensionPeine" step="0.001" min="0" placeholder="Ej. 18.000">
+              </div>
+            </div>
+            <div class="auto-calculation" id="calzasContainer" style="display: none;">
+              <p>Calzas requeridas:</p>
+              <div class="result" id="calzasResultado">0.000 mm</div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Otros</legend>
+            <div class="form-group">
+              <label>Ajuste del tiempo</label>
+              <div class="time-adjust">
+                <button type="button" data-value="-4">-4</button>
+                <button type="button" data-value="-3">-3</button>
+                <button type="button" data-value="-2">-2</button>
+                <button type="button" data-value="-1">-1</button>
+                <button type="button" data-value="0" class="active">0</button>
+                <button type="button" data-value="1">+1</button>
+                <button type="button" data-value="2">+2</button>
+                <button type="button" data-value="3">+3</button>
+                <button type="button" data-value="4">+4</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Notas adicionales</label>
+              <textarea id="notas" placeholder="Escribe aquí..."></textarea>
+            </div>
+          </fieldset>
+          <div class="form-buttons">
+            <button type="submit" id="calcular">Calcular</button>
+          </div>
+        </form>
+      </div>
+      <div id="resultados" style="display: none;">
+        <div class="card result-card" id="reporte"></div>
+        <div class="report-actions">
+          <button id="btnCopiar">Copiar</button>
+          <button id="btnImprimir">Imprimir</button>
+          <button id="btnDescargar">Descargar Ficha</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Knockout Section -->
+  <div id="knockout" class="content">
+    <div class="container">
+      <h1>Knock Out Pin - Rolling</h1>
+      <button class="knockout-back-btn" id="knockoutBackBtn">← Volver al Menú</button>
+      
+      <div class="grid-2">
+        <div class="form-group">
+          <label for="diameter">Diámetro deseado (mm):</label>
+          <input type="number" id="diameter" step="0.01" min="0" placeholder="Ej. 4.85" />
+        </div>
+        <div class="form-group">
+          <label for="machine">Modelo de máquina:</label>
+          <select id="machine">
+            <option value="">Seleccione una máquina</option>
+            <option>E.W. MENN GW-52</option>
+            <option>E.W. MENN ZU AF6</option>
+            <option>E.W. MENN AF6</option>
+            <option>E.W. MENN CHUN ZU AF6</option>
+            <option>E.W. MENN AF101</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="botador">Modelo de botador:</label>
+          <select id="botador">
+            <option value="">Seleccione un botador</option>
+            <option>T210050001</option>
+            <option>T210050002</option>
+            <option>T210050003</option>
+            <option>T210050004</option>
+            <option>T210050005</option>
+            <option>T210050006</option>
+            <option>T210050007</option>
+            <option>T210050008</option>
+            <option>T210050014</option>
+            <option>T210050016</option>
+            <option>T210050017</option>
+            <option>T210050018</option>
+            <option>T210050019</option>
+            <option>T210050021</option>
+            <option>T210050022</option>
+            <option>T210050023</option>
+            <option>T210050024</option>
+            <option>T210050025</option>
+            <option>T210050026</option>
+            <option>T210050027</option>
+            <option>T210050028</option>
+          </select>
+        </div>
+        <div class="form-group" style="display: flex; gap: var(--space-sm);">
+          <button id="buscarBotadorBtn" style="flex: 1;">Buscar Botador</button>
+          <button id="addNewBotadorBtn" style="width: auto;">+</button>
+        </div>
+      </div>
+      <div id="resultado"></div>
+      <div class="section-title">Recomendaciones</div>
+      <div id="recommendations" class="recommendation-cards"></div>
+      <div class="section-title">Tabla completa</div>
+      <div id="tabla-completa"></div>
+    </div>
+  </div>
+
+  <!-- History Section -->
+  <div id="history">
+    <button id="historyBackBtn">Atrás</button>
+    <div class="container">
+      <h2>Historial de Ajustes</h2>
+      <div id="historyList"></div>
+      <button id="clearHistoryBtn">Borrar Historial</button>
+    </div>
+  </div>
+
+  <!-- Add Item Modal -->
+  <div class="modal" id="addItemModal">
+    <div class="modal-content">
+      <button class="modal-close" id="closeModalBtn">&times;</button>
+      <h3 class="modal-title" id="modalTitle">Agregar Nuevo Item</h3>
+      <input type="text" class="modal-input" id="modalInput" placeholder="Ingrese el nuevo valor">
+      <div class="modal-buttons">
+        <button id="confirmAddBtn">Agregar</button>
+        <button id="cancelAddBtn">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PT Assistant -->
+  <div id="pt-assistant">
+    <div id="pt-character" title="Hola, soy PT. ¿Necesitas ayuda?"></div>
+    <div id="pt-chat">
+      <div id="pt-chat-header">
+        <span>PT - Asistente de Rolado</span>
+        <button id="pt-close-chat">×</button>
+      </div>
+      <div id="pt-chat-body"></div>
+      <div id="pt-chat-input">
+        <input type="text" id="pt-user-input" placeholder="Escribe tu pregunta...">
+        <button id="pt-send-btn">Enviar</button>
+      </div>
+      <div id="pt-quick-questions">
+        <button class="pt-question-btn">¿Cómo calcular calzas?</button>
+        <button class="pt-question-btn">¿Qué es el diámetro entre guías?</button>
+        <button class="pt-question-btn">¿Cómo registrar un ajuste?</button>
+        <button class="pt-question-btn">Problemas comunes en rolado</button>
+      </div>
+    </div>
+    <div class="pt-speech-bubble" id="pt-random-comment"></div>
+  </div>
+
+  <!-- Developer Credit -->
+  <div class="developer-credit">Desarrollado por Manuel Asael Rodríguez Loredo</div>
+
+  <script>
+    // Create floating sand particles
+    function createSandParticles() {
+      const particlesCount = 15;
+      const mainMenu = document.getElementById('mainMenu');
+      
+      for (let i = 0; i < particlesCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'sand-particle';
+        
+        // Random properties
+        const size = Math.random() * 4 + 1;
+        const posX = Math.random() * 100;
+        const posY = Math.random() * 100;
+        const delay = Math.random() * 15;
+        const duration = Math.random() * 10 + 10;
+        
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${posX}%`;
+        particle.style.top = `${posY}%`;
+        particle.style.animationDelay = `${delay}s`;
+        particle.style.animationDuration = `${duration}s`;
+        
+        mainMenu.appendChild(particle);
+      }
+    }
+
+    // Database for dropdown options
+    const database = {
+      operadores: ['Juan Pérez', 'María García', 'Carlos López', 'Ana Martínez'],
+      numerosParte: ['1234 5678 910', '9876 5432 100', '1122 3344 556', '7788 9900 112'],
+      nombresTornillos: ['DELTA PT 00x00', 'DELTA PT 01x01', 'DELTA PT 02x02', 'DELTA PT 03x03']
+    };
+
+    // History storage
+    let adjustmentHistory = JSON.parse(localStorage.getItem('rollfixHistory')) || [];
+
+    // Current modal context
+    let currentModalContext = null;
+
+    // Show sections
+    function showSection(sectionId) {
+      const sections = ['mainMenu', 'specLog', 'knockout', 'history'];
+      sections.forEach(id => {
+        const element = document.getElementById(id);
+        if (id === sectionId) {
+          element.style.display = id === 'history' ? 'block' : 'flex';
+          // Force animation reset
+          element.style.animation = 'none';
+          element.offsetHeight; // Trigger reflow
+          if (id === 'mainMenu') {
+            element.style.animation = 'fadeIn 0.6s ease forwards';
+            // Show menu elements immediately
+            document.querySelectorAll('#mainMenu h1, #mainMenu .slogan, .menu-btn').forEach(el => {
+              el.style.opacity = '1';
+              el.style.transform = 'translateY(0)';
+            });
+          } else {
+            element.style.animation = 'fadeIn 0.6s ease forwards';
+          }
+
+          // Load history if showing history section
+          if (id === 'history') {
+            loadHistory();
+          }
+        } else {
+          element.style.display = 'none';
+          element.style.animation = '';
+        }
+      });
+      
+      // Scroll to top when switching sections
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Load history items
+    function loadHistory() {
+      const historyList = document.getElementById('historyList');
+      historyList.innerHTML = '';
+
+      if (adjustmentHistory.length === 0) {
+        historyList.innerHTML = '<p style="text-align: center; color: var(--gray-6);">No hay registros en el historial</p>';
+        return;
+      }
+
+      adjustmentHistory.forEach((item, index) => {
+        const historyItem = document.createElement('div');
+        historyItem.className = 'history-item';
+        
+        const content = document.createElement('div');
+        content.className = 'history-item-content';
+        content.innerHTML = item.content;
+        
+        const actions = document.createElement('div');
+        actions.className = 'history-item-actions';
+        actions.innerHTML = `
+          <button onclick="copyHistoryItem(${index})">Copiar</button>
+          <button onclick="deleteHistoryItem(${index})">Borrar</button>
+        `;
+        
+        historyItem.appendChild(content);
+        historyItem.appendChild(actions);
+        historyList.appendChild(historyItem);
+      });
+    }
+
+    // Copy history item
+    function copyHistoryItem(index) {
+      if (index >= 0 && index < adjustmentHistory.length) {
+        navigator.clipboard.writeText(adjustmentHistory[index].text);
+        alert('Elemento copiado al portapapeles');
+      }
+    }
+
+    // Delete history item
+    function deleteHistoryItem(index) {
+      if (index >= 0 && index < adjustmentHistory.length) {
+        if (confirm('¿Está seguro que desea eliminar este registro?')) {
+          adjustmentHistory.splice(index, 1);
+          localStorage.setItem('rollfixHistory', JSON.stringify(adjustmentHistory));
+          loadHistory();
+        }
+      }
+    }
+
+    // Clear all history
+    function clearHistory() {
+      if (confirm('¿Está seguro que desea borrar todo el historial? Esta acción no se puede deshacer.')) {
+        adjustmentHistory = [];
+        localStorage.setItem('rollfixHistory', JSON.stringify(adjustmentHistory));
+        loadHistory();
+      }
+    }
+
+    // Show modal for adding items
+    function showAddModal(context) {
+      currentModalContext = context;
+      const modal = document.getElementById('addItemModal');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalInput = document.getElementById('modalInput');
+      
+      switch(context) {
+        case 'operator':
+          modalTitle.textContent = 'Agregar Nuevo Operador';
+          modalInput.placeholder = 'Ej. Luis Ramírez';
+          break;
+        case 'partNumber':
+          modalTitle.textContent = 'Agregar Nuevo Número de Parte';
+          modalInput.placeholder = 'Ej. 4455 6677 889';
+          break;
+        case 'screwName':
+          modalTitle.textContent = 'Agregar Nuevo Nombre de Tornillo';
+          modalInput.placeholder = 'Ej. DELTA PT 04x04';
+          break;
+        case 'botador':
+          modalTitle.textContent = 'Agregar Nuevo Botador';
+          modalInput.placeholder = 'Ej. T210050029';
+          break;
+      }
+      
+      modalInput.value = '';
+      modal.style.display = 'flex';
+    }
+
+    // Add new item to database
+    function addNewItem() {
+      const modalInput = document.getElementById('modalInput');
+      const value = modalInput.value.trim();
+      
+      if (!value) return;
+      
+      const selectElement = 
+        currentModalContext === 'operator' ? document.getElementById('operador') :
+        currentModalContext === 'partNumber' ? document.getElementById('numeroParte') :
+        currentModalContext === 'screwName' ? document.getElementById('nombreTornillo') :
+        document.getElementById('botador');
+      
+      // Add to select element
+      const option = document.createElement('option');
+      option.value = value;
+      option.textContent = value;
+      selectElement.appendChild(option);
+      
+      // Select the new value
+      selectElement.value = value;
+      
+      // Close modal
+      document.getElementById('addItemModal').style.display = 'none';
+    }
+
+    // Initialize dropdowns with database values
+    function initializeDropdowns() {
+      // Operators
+      const operadorSelect = document.getElementById('operador');
+      database.operadores.forEach(op => {
+        const option = document.createElement('option');
+        option.value = op;
+        option.textContent = op;
+        operadorSelect.appendChild(option);
+      });
+      
+      // Part numbers
+      const numeroParteSelect = document.getElementById('numeroParte');
+      database.numerosParte.forEach(np => {
+        const option = document.createElement('option');
+        option.value = np;
+        option.textContent = np;
+        numeroParteSelect.appendChild(option);
+      });
+      
+      // Screw names
+      const nombreTornilloSelect = document.getElementById('nombreTornillo');
+      database.nombresTornillos.forEach(nt => {
+        const option = document.createElement('option');
+        option.value = nt;
+        option.textContent = nt;
+        nombreTornilloSelect.appendChild(option);
+      });
+    }
+
+    // PT Assistant Functionality
+    const ptCharacter = document.getElementById('pt-character');
+    const ptChat = document.getElementById('pt-chat');
+    const ptChatBody = document.getElementById('pt-chat-body');
+    const ptUserInput = document.getElementById('pt-user-input');
+    const ptSendBtn = document.getElementById('pt-send-btn');
+    const ptCloseChat = document.getElementById('pt-close-chat');
+    const ptRandomComment = document.getElementById('pt-random-comment');
+    const ptQuickQuestions = document.querySelectorAll('.pt-question-btn');
+
+    // PT Personality and Responses
+    const ptResponses = {
+      greeting: "¡Hola! Soy PT, tu asistente de rolado. ¿En qué puedo ayudarte hoy?",
+      farewell: "¡Nos vemos! Recuerda revisar tus ajustes antes de empezar.",
+      unknown: "No estoy seguro de entender. ¿Podrías reformular tu pregunta?",
+      help: "Puedo ayudarte con: ajustes de máquina, cálculo de calzas, problemas comunes y más. ¡Pregúntame!",
+      jokes: [
+        "¿Sabes por qué el tornillo cruzó la calle? ¡Para llegar al otro filete!",
+        "¿Qué le dice un tornillo a otro? ¡Nos atornillamos bien!",
+        "En rolado, si no mides bien... ¡te meten un rosco!"
+      ],
+      comments: [
+        "¡Para la máquina!",
+        "¡Ahí viene Calidad, corre!",
+        "¿Ya metiste datos?",
+        "¡Ponte los tapones!",
+        "¡Métele presión!",
+        "¿Le saco o le meto?",
+        "¡Cuidado con el rebabeo!",
+        "Ese ajuste está para ponerse de punta",
+        "Más presión... ¡pero sin pasarse!",
+        "¿Viste el último ajuste que hicieron en la RO12?"
+      ],
+      questions: {
+        "¿Cómo calcular calzas?": "Las calzas se calculan restando la dimensión del peine de la profundidad del block. El sistema lo hace automáticamente en la sección 'Ajuste de Peines'.",
+        "¿Qué es el diámetro entre guías?": "Es la distancia entre las guías superior e inferior cuando están en posición de trabajo. Debe ser precisa para evitar desviaciones en el rolado.",
+        "¿Cómo registrar un ajuste?": "Completa todos los campos del formulario Rolling Spec-Log y haz clic en 'Calcular'. El sistema generará un reporte que puedes guardar.",
+        "Problemas comunes en rolado": "Los problemas más comunes son: rebabas (exceso presión), rosca incompleta (poca presión), doble rosca (guías mal alineadas) y desgaste prematuro de peines."
+      },
+      roladoTips: {
+        "presion": "La presión ideal depende del material y diámetro. Como regla general: 3-5 ton para diámetros pequeños, 5-8 ton para medianos, 8-12 ton para grandes.",
+        "alineacion": "Para una buena alineación, verifica que las guías estén paralelas con una galga. La desviación máxima permitida es 0.02mm.",
+        "velocidad": "Velocidades recomendadas: Aceros al carbono 100-200 RPM, Aceros inoxidables 80-150 RPM, Aleaciones especiales 60-120 RPM.",
+        "mantenimiento": "Lubrica los peines cada 4 horas de operación. Revisa el desgaste con un micrómetro cada turno."
+      }
+    };
+
+    // Show random comments periodically
+    function showRandomComment() {
+      if (ptChat.style.display === 'flex') return;
+      
+      const comments = ptResponses.comments;
+      const randomComment = comments[Math.floor(Math.random() * comments.length)];
+      
+      ptRandomComment.textContent = randomComment;
+      ptRandomComment.style.display = 'block';
+      
+      setTimeout(() => {
+        ptRandomComment.style.display = 'none';
+      }, 3000);
+    }
+
+    // Initialize PT Assistant
+    function initPTAssistant() {
+      // Show random comment every 30-60 seconds
+      setInterval(showRandomComment, Math.random() * 30000 + 30000);
+      
+      // Add character click event
+      ptCharacter.addEventListener('click', () => {
+        ptChat.style.display = 'flex';
+        addBotMessage(ptResponses.greeting);
+        ptCharacter.classList.remove('pt-attention');
+      });
+      
+      // Close chat event
+      ptCloseChat.addEventListener('click', () => {
+        ptChat.style.display = 'none';
+        addBotMessage(ptResponses.farewell);
+      });
+      
+      // Send message event
+      ptSendBtn.addEventListener('click', sendUserMessage);
+      ptUserInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendUserMessage();
+      });
+      
+      // Quick questions events
+      ptQuickQuestions.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const question = btn.textContent;
+          ptUserInput.value = question;
+          sendUserMessage();
+        });
+      });
+      
+      // Random attention animation
+      setInterval(() => {
+        if (ptChat.style.display !== 'flex') {
+          ptCharacter.classList.add('pt-attention');
+          setTimeout(() => {
+            ptCharacter.classList.remove('pt-attention');
+          }, 1000);
+        }
+      }, 15000);
+    }
+
+    // Add message to chat
+    function addBotMessage(message) {
+      const messageDiv = document.createElement('div');
+      messageDiv.classList.add('pt-message', 'pt-bot');
+      messageDiv.textContent = message;
+      ptChatBody.appendChild(messageDiv);
+      ptChatBody.scrollTop = ptChatBody.scrollHeight;
+    }
+
+    function addUserMessage(message) {
+      const messageDiv = document.createElement('div');
+      messageDiv.classList.add('pt-message', 'pt-user');
+      messageDiv.textContent = message;
+      ptChatBody.appendChild(messageDiv);
+      ptChatBody.scrollTop = ptChatBody.scrollHeight;
+    }
+
+    // Process user message
+    function sendUserMessage() {
+      const message = ptUserInput.value.trim();
+      if (!message) return;
+      
+      addUserMessage(message);
+      ptUserInput.value = '';
+      
+      // Simulate typing
+      setTimeout(() => {
+        processUserQuestion(message);
+      }, 500);
+    }
+
+    // Process questions
+    function processUserQuestion(question) {
+      let response = ptResponses.unknown;
+      const lowerQuestion = question.toLowerCase();
+      
+      // Check for exact matches
+      if (ptResponses.questions[question]) {
+        response = ptResponses.questions[question];
+      } 
+      // Check for keywords
+      else if (lowerQuestion.includes('hola') || lowerQuestion.includes('hi')) {
+        response = ptResponses.greeting;
+      } 
+      else if (lowerQuestion.includes('chiste') || lowerQuestion.includes('broma')) {
+        const jokes = ptResponses.jokes;
+        response = jokes[Math.floor(Math.random() * jokes.length)];
+      }
+      else if (lowerQuestion.includes('ayuda') || lowerQuestion.includes('help')) {
+        response = ptResponses.help;
+      }
+      else if (lowerQuestion.includes('calza') || lowerQuestion.includes('espacio')) {
+        response = ptResponses.questions["¿Cómo calcular calzas?"];
+      }
+      else if (lowerQuestion.includes('diámetro') || lowerQuestion.includes('guía')) {
+        response = ptResponses.questions["¿Qué es el diámetro entre guías?"];
+      }
+      else if (lowerQuestion.includes('presión') || lowerQuestion.includes('presion')) {
+        response = ptResponses.roladoTips.presion;
+      }
+      else if (lowerQuestion.includes('alineación') || lowerQuestion.includes('alineacion')) {
+        response = ptResponses.roladoTips.alineacion;
+      }
+      else if (lowerQuestion.includes('velocidad')) {
+        response = ptResponses.roladoTips.velocidad;
+      }
+      else if (lowerQuestion.includes('mantenimiento')) {
+        response = ptResponses.roladoTips.mantenimiento;
+      }
+      
+      addBotMessage(response);
+    }
+
+    // Find best thickness combination
+    function encontrarMejorCombinacion(target) {
+      const espesores = [1.020, 0.762, 0.686, 0.635, 0.533, 0.508, 0.483, 0.457, 0.432, 0.406, 0.381, 0.356, 0.330, 0.305, 0.279, 0.254, 0.229, 0.203, 0.178, 0.152, 0.127, 0.102, 0.076];
+      const tolerance = 0.001;
+      let bestSum = 0;
+      let bestCombination = [];
+      
+      function backtrack(start, currentCombination, currentSum) {
+        if (currentSum <= target + tolerance && currentSum > bestSum) {
+          bestSum = currentSum;
+          bestCombination = currentCombination.slice();
+        }
+        if (currentCombination.length >= 7) return;
+        for (let i = start; i < espesores.length; i++) {
+          let newSum = currentSum + espesores[i];
+          if (newSum > target + tolerance) continue;
+          currentCombination.push(espesores[i]);
+          backtrack(i + 1, currentCombination, newSum);
+          currentCombination.pop();
+        }
+      }
+      
+      if (!target || target <= 0) return { combinacion: [], total: 0, error: 0 };
+      backtrack(0, [], 0);
+      return { combinacion: bestCombination, total: bestSum, error: Math.abs(target - bestSum) };
+    }
+
+    // Calculate adjustment
+    function calcularAjuste() {
+      const operador = document.getElementById("operador").value.trim();
+      const numeroParte = document.getElementById("numeroParte").value.trim();
+      const nombreTornillo = document.getElementById("nombreTornillo").value.trim();
+      const tipoAjuste = document.getElementById("tipoAjuste").value;
+      const modeloMaquina = document.getElementById("modeloMaquina").value;
+      const numeroMaquina = document.getElementById("numeroMaquina").value;
+      const modeloBotador = document.getElementById("modeloBotador").value;
+      const diametroDeseado = parseFloat(document.getElementById("diametroDeseado").value) || 0;
+      const alturaGuia = parseFloat(document.getElementById("alturaGuia").value) || 0;
+      const alturaSobreguia = parseFloat(document.getElementById("alturaSobreguia").value) || 0;
+      const diametroEntreGuia = parseFloat(document.getElementById("diametroEntreGuia").value) || 0;
+      const diametroPuntaGuia = parseFloat(document.getElementById("diametroPuntaGuia").value) || 0;
+      const diametroMayorMax = parseFloat(document.getElementById("diametroMayorMax").value) || 0;
+      const diametroMayorMin = parseFloat(document.getElementById("diametroMayorMin").value) || 0;
+      const diametroMenorMax = parseFloat(document.getElementById("diametroMenorMax").value) || 0;
+      const diametroMenorMin = parseFloat(document.getElementById("diametroMenorMin").value) || 0;
+      const entradaSuperior = parseFloat(document.getElementById("entradaSuperior").value) || 0;
+      const entradaInferior = parseFloat(document.getElementById("entradaInferior").value) || 0;
+      const centroSuperior = parseFloat(document.getElementById("centroSuperior").value) || 0;
+      const centroInferior = parseFloat(document.getElementById("centroInferior").value) || 0;
+      const salidaSuperior = parseFloat(document.getElementById("salidaSuperior").value) || 0;
+      const salidaInferior = parseFloat(document.getElementById("salidaInferior").value) || 0;
+      const velocidadOperacion = document.getElementById("velocidadOperacion").value.trim();
+      const observacionesTecnicas = document.getElementById("observacionesTecnicas").value.trim();
+      const profundidadBlock = parseFloat(document.getElementById("profundidadBlock").value) || 0;
+      const dimensionPeine = parseFloat(document.getElementById("dimensionPeine").value) || 0;
+      const calzasRequeridas = (profundidadBlock - dimensionPeine).toFixed(3);
+      const ajusteTiempo = document.querySelector("#specLog .time-adjust button.active").getAttribute("data-value");
+      const notas = document.getElementById("notas").value.trim();
+      const fechaAjuste = document.getElementById("fechaAjuste").value;
+
+      let reporteHTML = `
+        <h2>Rolling Spec-Log • FICHA DE AJUSTE</h2>
+        <p class="info-label">Fecha: <span>${new Date(fechaAjuste).toLocaleString()}</span></p>
+        <p class="info-label">ID del reporte: <span>RSP-${Date.now().toString().slice(-6)}</span></p>
+      `;
+
+      if (operador || numeroParte || nombreTornillo || tipoAjuste) {
+        reporteHTML += `
+          <h3>INFORMACIÓN GENERAL</h3>
+          <table>
+            ${operador ? `<tr><th>Operador</th><td>${operador}</td></tr>` : ''}
+            ${numeroParte ? `<tr><th>Número de parte</th><td>${numeroParte}</td></tr>` : ''}
+            ${nombreTornillo ? `<tr><th>Tornillo</th><td>${nombreTornillo}</td></tr>` : ''}
+            ${tipoAjuste ? `<tr><th>Tipo</th><td>${tipoAjuste}</td></tr>` : ''}
+          </table>
+        `;
+      }
+
+      if (modeloMaquina || numeroMaquina || modeloBotador) {
+        reporteHTML += `
+          <h3>CONFIGURACIÓN DE MÁQUINA</h3>
+          <table>
+            ${modeloMaquina ? `<tr><th>Modelo</th><td>${modeloMaquina}</td></tr>` : ''}
+            ${numeroMaquina ? `<tr><th>Número</th><td>${numeroMaquina}</td></tr>` : ''}
+            ${modeloBotador ? `<tr><th>Botador</th><td>${modeloBotador}</td></tr>` : ''}
+          </table>
+        `;
+      }
+
+      if (diametroDeseado > 0 || alturaGuia > 0 || alturaSobreguia > 0 || diametroEntreGuia > 0 || diametroPuntaGuia > 0) {
+        reporteHTML += `
+          <h3>PARÁMETROS TÉCNICOS</h3>
+          <table>
+            ${diametroDeseado > 0 ? `
+              <tr><th>Diámetro deseado</th><td>${diametroDeseado.toFixed(3)} mm</td></tr>
+              ${(() => {
+                const res = encontrarMejorCombinacion(diametroDeseado);
+                return `
+                  <tr><th>Combinación óptima</th><td class="highlight">${res.combinacion.join(" + ") || "N/A"}</td></tr>
+                  <tr><th>Espesor total</th><td class="success">${res.total.toFixed(3)} mm</td></tr>
+                  <tr><th>Margen de error</th><td class="${res.error <= 0.01 ? 'success' : 'error'}">${res.error.toFixed(3)} mm</td></tr>
+                `;
+              })()}
+            ` : ''}
+            ${alturaGuia > 0 ? `<tr><th>Altura de la guía</th><td>${alturaGuia.toFixed(3)} mm</td></tr>` : ''}
+            ${alturaSobreguia > 0 ? `<tr><th>Altura de la sobreguía</th><td>${alturaSobreguia.toFixed(3)} mm</td></tr>` : ''}
+            ${diametroEntreGuia > 0 ? `<tr><th>Diámetro entre la guía</th><td>${diametroEntreGuia.toFixed(3)} mm</td></tr>` : ''}
+            ${diametroPuntaGuia > 0 ? `<tr><th>Diámetro punta guía izq.</th><td>${diametroPuntaGuia.toFixed(3)} mm</td></tr>` : ''}
+          </table>
+        `;
+      }
+
+      if (diametroMayorMax > 0 || diametroMayorMin > 0 || diametroMenorMax > 0 || diametroMenorMin > 0) {
+        reporteHTML += `
+          <h3>MEDICIONES DEL BLANK (mm)</h3>
+          <table>
+            ${diametroMayorMax > 0 ? `<tr><th>Diámetro Mayor - Máximo</th><td>${diametroMayorMax.toFixed(3)} mm</td></tr>` : ''}
+            ${diametroMayorMin > 0 ? `<tr><th>Diámetro Mayor - Mínimo</th><td>${diametroMayorMin.toFixed(3)} mm</td></tr>` : ''}
+            ${diametroMenorMax > 0 ? `<tr><th>Diámetro Menor - Máximo</th><td>${diametroMenorMax.toFixed(3)} mm</td></tr>` : ''}
+            ${diametroMenorMin > 0 ? `<tr><th>Diámetro Menor - Mínimo</th><td>${diametroMenorMin.toFixed(3)} mm</td></tr>` : ''}
+          </table>
+        `;
+      }
+
+      if (entradaSuperior > 0 || entradaInferior > 0 || centroSuperior > 0 || centroInferior > 0 || salidaSuperior > 0 || salidaInferior > 0) {
+        reporteHTML += `
+          <h3>LECTURA DE PRECISIÓN (mm)</h3>
+          <table>
+            ${entradaSuperior > 0 ? `<tr><th>Entrada - Superior</th><td>${entradaSuperior.toFixed(3)} mm</td></tr>` : ''}
+            ${entradaInferior > 0 ? `<tr><th>Entrada - Inferior</th><td>${entradaInferior.toFixed(3)} mm</td></tr>` : ''}
+            ${centroSuperior > 0 ? `<tr><th>Centro - Superior</th><td>${centroSuperior.toFixed(3)} mm</td></tr>` : ''}
+            ${centroInferior > 0 ? `<tr><th>Centro - Inferior</th><td>${centroInferior.toFixed(3)} mm</td></tr>` : ''}
+            ${salidaSuperior > 0 ? `<tr><th>Salida - Superior</th><td>${salidaSuperior.toFixed(3)} mm</td></tr>` : ''}
+            ${salidaInferior > 0 ? `<tr><th>Salida - Inferior</th><td>${salidaInferior.toFixed(3)} mm</td></tr>` : ''}
+          </table>
+        `;
+      }
+
+      if (velocidadOperacion || observacionesTecnicas) {
+        reporteHTML += `
+          <h3>DATOS ADICIONALES RÁPIDOS</h3>
+          <table>
+            ${velocidadOperacion ? `<tr><th>Velocidad de operación</th><td>${velocidadOperacion}</td></tr>` : ''}
+          </table>
+          ${observacionesTecnicas ? `<div class="notes-section"><p class="info-label">Observaciones técnicas:</p><p>${observacionesTecnicas}</p></div>` : ''}
+        `;
+      }
+
+      if (profundidadBlock > 0 || dimensionPeine > 0) {
+        reporteHTML += `
+          <h3>AJUSTE DE PEINES</h3>
+          <table>
+            ${profundidadBlock > 0 ? `<tr><th>Profundidad del block</th><td>${profundidadBlock.toFixed(3)} mm</td></tr>` : ''}
+            ${dimensionPeine > 0 ? `<tr><th>Dimensión del peine</th><td>${dimensionPeine.toFixed(3)} mm</td></tr>` : ''}
+            ${(profundidadBlock > 0 && dimensionPeine > 0) ? `<tr><th>Calzas requeridas</th><td class="highlight">${calzasRequeridas} mm</td></tr>` : ''}
+          </table>
+        `;
+      }
+
+      if (ajusteTiempo || notas) {
+        reporteHTML += `
+          <h3>INFORMACIÓN ADICIONAL</h3>
+          ${ajusteTiempo ? `<p class="info-label">Ajuste del tiempo: <span>${ajusteTiempo}</span></p>` : ''}
+          ${notas ? `<div class="notes-section"><p class="info-label">Notas:</p><p>${notas}</p></div>` : ''}
+        `;
+      }
+
+      document.getElementById("reporte").innerHTML = reporteHTML;
+      
+      // Save to history
+      const historyItem = {
+        date: new Date(fechaAjuste).toLocaleString(),
+        content: reporteHTML,
+        text: document.getElementById("reporte").innerText
+      };
+      
+      adjustmentHistory.unshift(historyItem);
+      localStorage.setItem('rollfixHistory', JSON.stringify(adjustmentHistory));
+      
+      // Animate results appearance
+      const resultados = document.getElementById("resultados");
+      resultados.style.display = "block";
+      resultados.style.animation = "fadeIn 0.6s ease";
+      
+      // Scroll to results
+      setTimeout(() => {
+        resultados.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
+
+    function copiarReporte() {
+      navigator.clipboard.writeText(document.getElementById("reporte").innerText);
+      
+      // Show feedback animation
+      const btn = document.getElementById("btnCopiar");
+      btn.innerHTML = '✓ Copiado';
+      btn.style.backgroundColor = 'var(--success)';
+      btn.style.color = 'var(--white)';
+      btn.style.borderColor = 'var(--success)';
+      setTimeout(() => {
+        btn.innerHTML = 'Copiar';
+        btn.style.backgroundColor = '';
+        btn.style.color = '';
+        btn.style.borderColor = '';
+      }, 2000);
+    }
+    
+    function imprimirReporte() {
+      const contenido = document.getElementById("reporte").innerHTML;
+      const ventana = window.open("", "", "width=800,height=600");
+      ventana.document.write(`
+        <html>
+          <head>
+            <title>Rolling Spec-Log Reporte de Ajuste</title>
+            <style>
+              body { 
+                font-family: -apple-system, BlinkMacSystemFont, sans-serif; 
+                padding: 40px;
+                color: #1A1A1A;
+                background: white;
+              } 
+              table { 
+                border-collapse: collapse; 
+                width: 100%; 
+                margin: 20px 0;
+                border: 1px solid #E5E5E5;
+              } 
+              th, td { 
+                border: 1px solid #E5E5E5; 
+                padding: 12px; 
+              } 
+              th { 
+                background: #F2F2F2; 
+                color: #1A1A1A; 
+                font-weight: 600;
+              }
+              h2 { 
+                color: #000000; 
+                text-align: center;
+                font-size: 24px;
+                margin-bottom: 20px;
+                font-weight: 700;
+              } 
+              h3 { 
+                color: #1A1A1A;
+                font-size: 18px;
+                margin: 30px 0 15px;
+                font-weight: 600;
+              }
+              .info-label {
+                font-weight: 500;
+                color: #1A1A1A;
+              }
+              .info-label span {
+                font-weight: 400;
+                color: #8E8E93;
+              }
+              .highlight {
+                color: #000000;
+                font-weight: 600;
+              }
+              .success {
+                color: #34C759;
+              }
+              .error {
+                color: #FF3B30;
+              }
+              @page {
+                size: auto;
+                margin: 10mm;
+              }
+            </style>
+          </head>
+          <body>${contenido}</body>
+        </html>
+      `);
+      ventana.document.close();
+      setTimeout(() => {
+        ventana.print();
+      }, 500);
+    }
+    
+    function descargarReporte() {
+      const blob = new Blob([document.getElementById("reporte").innerText], { type: "text/plain" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `Rolling_Spec-Log_Reporte_${new Date().toISOString().slice(0,10)}.txt`;
+      link.click();
+      
+      // Show feedback animation
+      const btn = document.getElementById("btnDescargar");
+      btn.innerHTML = '✓ Descargado';
+      btn.style.backgroundColor = 'var(--success)';
+      btn.style.color = 'var(--white)';
+      btn.style.borderColor = 'var(--success)';
+      setTimeout(() => {
+        btn.innerHTML = 'Descargar Ficha';
+        btn.style.backgroundColor = '';
+        btn.style.color = '';
+        btn.style.borderColor = '';
+      }, 2000);
+    }
+
+    const datos = [
+      ["T210050001", 126.0, 32.5, 3.5, 16.9, 32.0, 3.5, "Blank", "E.W. MENN GW-52"],
+      ["T210050002", 126.0, 32.5, 3.5, 16.9, 32.0, 2.29, "Opción 1", "E.W. MENN GW-52"],
+      ["T210050003", 126.0, 32.5, 3.5, 16.9, 32.0, 2.54, "Opción 1", "E.W. MENN GW-52"],
+      ["T210050004", 126.0, 32.5, 3.5, 16.9, 32.0, 3.25, "Opción 1", "E.W. MENN GW-52"],
+      ["T210050005", 126.0, 32.5, 3.5, 16.9, 32.0, 3.55, "Opción 2", "E.W. MENN GW-52"],
+      ["T210050006", 126.0, 32.5, 3.5, 16.9, 32.0, 5.0, "Opción 2", "E.W. MENN GW-52"],
+      ["T210050007", 126.0, 32.5, 3.5, 16.9, 32.0, 5.15, "Opción 2", "E.W. MENN GW-52"],
+      ["T210050008", 98.0, 32.5, 4.0, 12.5, 32.0, 4.1, "Blank", "E.W. MENN ZU AF6"],
+      ["T210050014", 98.0, 32.5, 4.0, 12.5, 32.0, 3.55, "Opción 1", "E.W. MENN AF6"],
+      ["T210050016", 98.0, 32.5, 4.1, 12.5, 32.0, 5.33, "Opción 2", "E.W. MENN AF6"],
+      ["T210050017", 98.0, 32.5, 4.1, 12.5, 32.0, 3.55, "Opción 2", "E.W. MENN AF6"],
+      ["T210050018", 98.0, 32.5, 4.1, 12.5, 32.0, 4.32, "Opción 2", "E.W. MENN AF6"],
+      ["T210050019", 105.5, 32.5, 3.5, 12.5, 32.0, 3.5, "Blank", "E.W. MENN CHUN ZU AF6"],
+      ["T210050021", 105.5, 32.5, 3.5, 12.5, 56.0, 1.78, "Opción 1", "E.W. MENN CHUN ZU AF6"],
+      ["T210050022", 105.5, 32.5, 3.5, 12.5, 56.0, 2.03, "Opción 1", "E.W. MENN CHUN ZU AF6"],
+      ["T210050023", 105.5, 32.5, 3.5, 12.5, 56.0, 2.54, "Opción 1", "E.W. MENN CHUN ZU AF6"],
+      ["T210050024", 105.5, 32.5, 3.5, 12.5, 56.0, 2.5, "Opción 1", "E.W. MENN CHUN ZU AF6"],
+      ["T210050025", 105.5, 32.5, 3.5, 12.5, 56.0, 3.0, "Opción 1", "E.W. MENN CHUN ZU AF6"],
+      ["T210050026", 105.5, 32.5, 3.5, 12.5, 56.0, 4.7, "Opción 2", "E.W. MENN CHUN ZU AF6"],
+      ["T210050027", 115.0, 4.0, 7.5, 12.5, 30.0, 7.5, "Blank", "E.W. MENN AF101"],
+      ["T210050028", 115.0, 4.0, 7.5, 12.5, 30.0, 6.0, "Opción 1", "E.W. MENN AF101"],
+    ];
+
+    function generarTabla(filas, resaltar = null) {
+      let html = "<table><tr>";
+      const headers = ["NO. PARTE", "A", "B", "C", "D", "E", "F", "Tipo", "Máquina"];
+      headers.forEach(h => html += `<th>${h}</th>`);
+      html += "</tr>";
+      filas.forEach(fila => {
+        const isHighlighted = resaltar && fila[0] === resaltar[0];
+        html += `<tr class="${isHighlighted ? 'selected-row' : ''}" onclick="resaltarFila(this)">`;
+        fila.forEach(celda => html += `<td>${celda}</td>`);
+        html += "</tr>";
+      });
+      html += "</table>";
+      return html;
+    }
+
+    function resaltarFila(fila) {
+      document.querySelectorAll("#knockout table tr").forEach(tr => tr.classList.remove("selected-row"));
+      fila.classList.add("selected-row");
+      
+      // Add animation
+      fila.style.transform = "scale(1.02)";
+      setTimeout(() => {
+        fila.style.transform = "";
+      }, 200);
+    }
+
+    function buscarBotador() {
+      const diametro = parseFloat(document.getElementById("diameter").value);
+      const maquina = document.getElementById("machine").value;
+      const botadorSeleccionado = document.getElementById("botador").value;
+      const resultado = document.getElementById("resultado");
+      const recommendations = document.getElementById("recommendations");
+      const btn = document.getElementById("buscarBotadorBtn");
+
+      // Add loading animation
+      btn.innerHTML = '<span class="loading-dots"></span> Buscando';
+      btn.disabled = true;
+
+      setTimeout(() => {
+        if (isNaN(diametro)) {
+          resultado.innerHTML = `<div class="card" style="color:var(--error);">Ingrese un diámetro válido</div>`;
+          recommendations.innerHTML = "";
+          btn.innerHTML = 'Buscar Botador';
+          btn.disabled = false;
+          return;
+        }
+
+        if (!maquina) {
+          resultado.innerHTML = `<div class="card" style="color:var(--error);">Seleccione una máquina</div>`;
+          recommendations.innerHTML = "";
+          btn.innerHTML = 'Buscar Botador';
+          btn.disabled = false;
+          return;
+        }
+
+        let candidatos = datos.filter(d => d[8] === maquina);
+        
+        if (botadorSeleccionado) {
+          candidatos = candidatos.filter(d => d[0] === botadorSeleccionado);
+        } else {
+          // Find best 3 recommendations with error between -0.1 and -0.55mm
+          candidatos = candidatos
+            .map(d => ({...d, error: (d[6] - diametro)}))
+            .filter(d => d.error <= -0.1 && d.error >= -0.55)
+            .sort((a, b) => Math.abs(a.error + 0.3) - Math.abs(b.error + 0.3))
+            .slice(0, 3);
+        }
+
+        if (botadorSeleccionado) {
+          const error = (diametro - candidatos[0][6]).toFixed(3);
+          resultado.innerHTML = `
+            <div class="card">
+              <p><strong>Botador seleccionado:</strong> <span class="highlight">${candidatos[0][0]}</span></p>
+              <p><strong>Máquina:</strong> ${candidatos[0][8]}</p>
+              <p><strong>Medidas (A-F):</strong> ${candidatos[0].slice(1, 7).join(" / ")}</p>
+              <p><strong>Margen de error:</strong> <span class="${error <= 0.1 ? 'success' : 'error'}">${error} mm</span></p>
+            </div>
+          `;
+          recommendations.innerHTML = "";
+        } else if (candidatos.length > 0) {
+          resultado.innerHTML = `<div class="card"><p>Se encontraron ${candidatos.length} recomendaciones para diámetro ${diametro.toFixed(2)} mm</p></div>`;
+          
+          recommendations.innerHTML = candidatos.map((botador, index) => {
+            const error = (diametro - botador[6]).toFixed(3);
+            const cardClass = index === 0 ? 'best' : index === 1 ? 'good' : 'ok';
+            return `
+              <div class="recommendation-card ${cardClass}">
+                <h3>${botador[0]}</h3>
+                <p><strong>Tipo:</strong> ${botador[7]}</p>
+                <p><strong>Diámetro:</strong> ${botador[6]} mm</p>
+                <p><strong>Error:</strong> <span class="${error <= 0.1 ? 'success' : 'error'}">${error} mm</span></p>
+                <p><strong>Máquina:</strong> ${botador[8]}</p>
+              </div>
+            `;
+          }).join('');
+        } else {
+          resultado.innerHTML = `<div class="card" style="color:var(--error);">No se encontraron botadores adecuados para el diámetro especificado</div>`;
+          recommendations.innerHTML = "";
+        }
+
+        btn.innerHTML = 'Buscar Botador';
+        btn.disabled = false;
+        
+        // Scroll to results
+        if (candidatos.length > 0) {
+          setTimeout(() => {
+            document.getElementById("recommendations").scrollIntoView({ 
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }, 100);
+        }
+      }, 800);
+    }
+
+    // Initialize when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // Create floating sand particles
+      createSandParticles();
+      
+      // Initialize dropdowns
+      initializeDropdowns();
+      
+      // Show main menu immediately
+      showSection('mainMenu');
+      
+      // Menu button interactions
+      document.getElementById('specLogBtn').addEventListener('click', function() {
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          this.style.transform = '';
+          showSection('specLog');
+        }, 200);
+      });
+      
+      document.getElementById('knockoutBtn').addEventListener('click', function() {
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          this.style.transform = '';
+          showSection('knockout');
+        }, 200);
+      });
+      
+      document.getElementById('backToMenuFromSpecLog').addEventListener('click', function() {
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          this.style.transform = '';
+          showSection('mainMenu');
+        }, 200);
+      });
+      
+      // Back to menu button in Knockout
+      document.getElementById('knockoutBackBtn').addEventListener('click', function() {
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          this.style.transform = '';
+          showSection('mainMenu');
+        }, 200);
+      });
+
+      // View history button
+      document.getElementById('viewHistoryBtn').addEventListener('click', function() {
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          this.style.transform = '';
+          showSection('history');
+        }, 200);
+      });
+
+      // History back button
+      document.getElementById('historyBackBtn').addEventListener('click', function() {
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          this.style.transform = '';
+          showSection('specLog');
+        }, 200);
+      });
+
+      // Clear history button
+      document.getElementById('clearHistoryBtn').addEventListener('click', clearHistory);
+
+      // Add operator button
+      document.getElementById('addOperatorBtn').addEventListener('click', () => showAddModal('operator'));
+      
+      // Add part number button
+      document.getElementById('addPartNumberBtn').addEventListener('click', () => showAddModal('partNumber'));
+      
+      // Add screw name button
+      document.getElementById('addScrewNameBtn').addEventListener('click', () => showAddModal('screwName'));
+
+      // Add botador button
+      document.getElementById('addNewBotadorBtn').addEventListener('click', () => showAddModal('botador'));
+
+      // Modal buttons
+      document.getElementById('confirmAddBtn').addEventListener('click', addNewItem);
+      document.getElementById('cancelAddBtn').addEventListener('click', function() {
+        document.getElementById('addItemModal').style.display = 'none';
+      });
+      document.getElementById('closeModalBtn').addEventListener('click', function() {
+        document.getElementById('addItemModal').style.display = 'none';
+      });
+
+      // Close modal when clicking outside
+      document.getElementById('addItemModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+          this.style.display = 'none';
+        }
+      });
+
+      // Set current date/time
+      const fechaInput = document.getElementById("fechaAjuste");
+      fechaInput.value = new Date().toISOString().slice(0,16);
+      
+      // Time adjustment buttons
+      const timeButtons = document.querySelectorAll("#specLog .time-adjust button");
+      timeButtons.forEach(btn => {
+        btn.addEventListener("click", function() {
+          timeButtons.forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          btn.style.transform = 'scale(0.95)';
+          setTimeout(() => {
+            btn.style.transform = '';
+          }, 200);
+        });
+      });
+      
+      // Automatic calculation for Calzas Requeridas
+      const profundidadBlockInput = document.getElementById("profundidadBlock");
+      const dimensionPeineInput = document.getElementById("dimensionPeine");
+      
+      function calcularCalzas() {
+        const profundidad = parseFloat(profundidadBlockInput.value) || 0;
+        const dimension = parseFloat(dimensionPeineInput.value) || 0;
+        const calzas = profundidad - dimension;
+        
+        if (profundidad > 0 && dimension > 0) {
+          document.getElementById("calzasContainer").style.display = "block";
+          document.getElementById("calzasResultado").textContent = calzas.toFixed(3) + " mm";
+        } else {
+          document.getElementById("calzasContainer").style.display = "none";
+        }
+      }
+      
+      profundidadBlockInput.addEventListener("input", calcularCalzas);
+      dimensionPeineInput.addEventListener("input", calcularCalzas);
+      
+      // Form submission
+      document.getElementById("adjustForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+        // Add loading animation
+        const btn = document.getElementById("calcular");
+        btn.innerHTML = '<span class="loading-dots"></span> Calculando';
+        btn.disabled = true;
+        
+        setTimeout(() => {
+          calcularAjuste();
+          btn.innerHTML = 'Calcular';
+          btn.disabled = false;
+        }, 800);
+      });
+      
+      // Report actions
+      document.getElementById("btnCopiar").addEventListener("click", copiarReporte);
+      document.getElementById("btnImprimir").addEventListener("click", imprimirReporte);
+      document.getElementById("btnDescargar").addEventListener("click", descargarReporte);
+
+      // Knockout functionality
+      document.getElementById("buscarBotadorBtn").addEventListener("click", buscarBotador);
+      document.getElementById("tabla-completa").innerHTML = generarTabla(datos);
+
+      // Initialize PT Assistant
+      initPTAssistant();
+    });
+
+    // Make resaltarFila available globally for table row clicks
+    window.resaltarFila = resaltarFila;
+  </script>
+</body>
+</html>
